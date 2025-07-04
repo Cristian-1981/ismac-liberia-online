@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+group = 'com.distribuida'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation(platform('org.junit:junit-bom:5.10.0'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
